@@ -5,7 +5,7 @@
 #include "GPSreader.hpp"
 
 // use the mcu as a serial converter
-#define PASSTHROUGH
+//#define PASSTHROUGH
 
 GPSreader gps = NULL;
 
