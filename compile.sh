@@ -12,7 +12,8 @@ then
     mv ./build/box.ino ./build/build.ino
     ./arduino-cli compile \
     -p $2 \
-    -b esp32:esp32:esp32 build \
+    -b esp32:esp32:esp32 \
+    build \
     --upload \
     --build-cache-path $PWD/build/build/cache \
     --build-path $PWD/build/build/compile \
@@ -24,7 +25,8 @@ then
     mv ./build/tracker.ino ./build/build.ino
     ./arduino-cli compile \
     -p $2 \
-    -b esp32:esp32:esp32 build \
+    -b esp32:esp32:esp32 \
+    build \
     --upload \
     --build-cache-path $PWD/build/build/cache \
     --build-path $PWD/build/build/compile \
