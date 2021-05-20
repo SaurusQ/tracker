@@ -26,13 +26,17 @@ UBXmsg* GPSreader::process()
 
 bool GPSreader::readMsg()
 {
+    Serial.println("readMsg");
     if(!onSync)
     {
+        Serial.println("Trying to sync");
         if(!this->sync()) return false;
+        onSync = true;
     }
     if(!headerRead)
     {
         // Read the header
+        Serial.println("Trying to read the hearder");
         if(serial_->available() < 4) return false;
         serial_->readBytes(buff_, 4);
         // class
@@ -44,6 +48,7 @@ bool GPSreader::readMsg()
     }
     if(serial_->available() >= len_)
     {
+        Serial.println("Trying to read the msg");
         // read rest of the message + check sum of 2
         serial_->readBytes(buff_ + HEADER_SIZE, len_ + 2);
         ck_a_ = (buff_ + HEADER_SIZE + len_)[0];

@@ -23,14 +23,17 @@ void setup()
             Serial.write(Serial2.read());
     }
     #endif
+    Serial.println("Starting GPSreader");
     gps = GPSreader(&Serial2);
 }
 
 void loop()
 {
+    Serial.println("Loop");
     UBXmsg* msg = gps.process();
     if(msg != nullptr)
     {
+        Serial.println("Message found");
         Serial.println(msg->toString());
     }
 }
