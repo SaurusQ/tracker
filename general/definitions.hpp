@@ -1,10 +1,15 @@
- 
-
 #pragma once
+
+#define DEBUG_LOG
 
 #define BUFFER_SIZE 256
 #define HEADER_SIZE 4
 
+#ifdef DEBUG_LOG
+#define LOG(a) Serial.println(a)
+#else
+#define LOG(a) (void)
+#endif
 // for syntax highlighter
 /*#ifndef uint8_t
     #define uint8_t unsigned char
