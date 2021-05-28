@@ -4,6 +4,7 @@ rm -rf build
 mkdir build
 
 find ./general -mindepth 1 -type f -exec cp -t ./build -i '{}' +
+find ./lib -mindepth 1 -type f -exec cp -t ./build -i '{}' +
 
 if [ $1 == box ];
 then
