@@ -12,8 +12,8 @@ struct Ecef
 
 struct Deg
 {
-    int32_t lat = 0;       // 1e-7
     int32_t lon = 0;       // 1e-7
+    int32_t lat = 0;       // 1e-7
     int32_t height = 0;    // mm   height above sea level
     uint32_t acc = 0;      // mm
 };

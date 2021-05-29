@@ -28,8 +28,8 @@ void GPSmodule::process()
                 ecef_.acc = ((NAV_POSECEF*)msg)->pAcc;
                 break;
             case UBX_TYPE::E_NAV_POSLLH:
-                deg_.lat = ((NAV_POSLLH*)msg)->lat;
                 deg_.lon = ((NAV_POSLLH*)msg)->lon;
+                deg_.lat = ((NAV_POSLLH*)msg)->lat;
                 deg_.height = ((NAV_POSLLH*)msg)->hMSL;
                 deg_.acc = ((NAV_POSLLH*)msg)->hAcc;
                 break;

@@ -3,7 +3,7 @@
 
 UBXmsg::UBXmsg(void* a, uint8_t* buff)
 {
-    std::memcpy(this, buff + HEADER_SIZE, *(uint16_t*)(buff + 2));
+    std::memcpy(this, buff, *(uint16_t*)(buff + 2));
 }
 
 UBXmsg* parseUBX(uint8_t* buff)
