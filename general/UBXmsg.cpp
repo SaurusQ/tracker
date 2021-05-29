@@ -3,7 +3,7 @@
 
 UBXmsg::UBXmsg(void* a, uint8_t* buff)
 {
-    std::memcpy(this, buff, *(uint16_t*)(buff + 2));
+    std::memcpy(((uint8_t*)this) + 4u, buff + 4u, *(uint16_t*)(buff + 2));
 }
 
 UBXmsg* parseUBX(uint8_t* buff)

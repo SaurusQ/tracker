@@ -25,12 +25,11 @@ UBXmsg* GPSreader::process()
     {
         if(this-checksum())
         {
-            Serial.print("Correct checksum\n");
             return parseUBX(buff_);
         }
         else
         {
-            Serial.print("Wrong checksum\n");
+            LOG("Wrong checksum\n");
         }
     }
     return nullptr;
@@ -55,7 +54,7 @@ bool GPSreader::readMsg()
         id_ = buff_[1];
         len_ = *(uint16_t*)(buff_ + 2);
         headerRead = true;
-        LOG("Lenght: " + String(len_));
+        //LOG("Lenght: " + String(len_));
         if(len_ > 100) // just for that the sync problems are resolved faster 
         {
             headerRead = false;
