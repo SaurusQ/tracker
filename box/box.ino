@@ -19,15 +19,15 @@ void setup()
     LOG("Starting");
     Serial2.begin(9600);
     #ifdef PASSTHROUGH
-    Serial1.begin(9600);
-    Serial1.println("Debug interface:");
+    //Serial1.begin(9600);
+    //Serial1.println("Debug interface:");
     while(true)
     {
         if(Serial.available())
         {
             uint8_t byte = Serial.read();
             Serial2.write(byte);
-            Serial1.print(byte, HEX);
+            //Serial1.print(byte, HEX);
         }
 
         if(Serial2.available())
@@ -49,7 +49,7 @@ void setup()
 void loop()
 {
     LOG("Loop");
-    gps.process();
+    for(int i = 0; i < 50; i++)gps.process();
     delay(1000);
     lcd.clear();
     lcd.home();
