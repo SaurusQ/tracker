@@ -22,7 +22,7 @@ class UBXmsg
 {
     public:
         UBXmsg(void* a, uint8_t* buff);
-        static const uint32_t getHash();
+        static constexpr uint32_t getHash();
         virtual UBX_TYPE getType() = 0;
         virtual String toString() = 0;
 };
@@ -31,7 +31,7 @@ class NAV_POSLLH : public UBXmsg
 {
     public:
         NAV_POSLLH(uint8_t* buff) : UBXmsg(this, buff) {}
-        static const uint32_t hash = HASH(0x01, 0x02, 28);
+        static constexpr uint32_t hash = HASH(0x01, 0x02, 28);
         virtual UBX_TYPE getType() { return UBX_TYPE::E_NAV_POSLLH; };
         virtual String toString() {
             return "NAV_POSLLH\nLon: " + String(lon) + "\n" + "Lat: " + String(lat);
@@ -50,7 +50,7 @@ class NAV_POSECEF : public UBXmsg
 {
     public:
         NAV_POSECEF(uint8_t* buff) : UBXmsg(this, buff) {}
-        static const uint32_t hash = HASH(0x01, 0x01, 20);
+        static constexpr uint32_t hash = HASH(0x01, 0x01, 20);
         virtual UBX_TYPE getType() { return UBX_TYPE::E_NAV_POSECEF; }
         virtual String toString() {
             return "NAV_POSECEF\nAccuracy: " + String(pAcc);
@@ -68,7 +68,7 @@ class NAV_PVT : public UBXmsg
 {
     public:
         NAV_PVT(uint8_t* buff) : UBXmsg(this, buff) {}
-        static const uint32_t hash = HASH(0x01, 0x07, 92);
+        static constexpr uint32_t hash = HASH(0x01, 0x07, 92);
         virtual UBX_TYPE getType() { return UBX_TYPE::E_NAV_PVT; }
         virtual String toString() {
             return "NAV_PVT\nLon: " + String(lon) + "\n" + "Lat: " + String(lat);
@@ -118,7 +118,7 @@ class NAV_SOL : public UBXmsg
 {
     public:
         NAV_SOL(uint8_t* buff) : UBXmsg(this, buff) {}
-        static const uint32_t hash = HASH(0x01, 0x06, 52);
+        static constexpr uint32_t hash = HASH(0x01, 0x06, 52);
         virtual UBX_TYPE getType() { return UBX_TYPE::E_NAV_SOL; }
         virtual String toString() {
             return "NAV_SOL\nSatellites: " + String(numSV) + "\n" + "gpsFix: " + String(gpsFix);

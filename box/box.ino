@@ -10,7 +10,7 @@
 // use the mcu as a serial converter
 //#define PASSTHROUGH
 
-GPSmodule gps = NULL;
+GPSmodule gps = GPSmodule(&Serial2);
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(LCD_ADDR, 16, 2, LCD_SDA, LCD_SCL);
 
 void setup()
@@ -19,16 +19,26 @@ void setup()
     LOG("Starting");
     Serial2.begin(9600);
     #ifdef PASSTHROUGH
+    Serial1.begin(9600);
+    Serial1.println("Debug interface:");
     while(true)
     {
         if(Serial.available())
-            Serial2.write(Serial.read());
+        {
+            uint8_t byte = Serial.read();
+            Serial2.write(byte);
+            Serial1.print(byte, HEX);
+        }
+
         if(Serial2.available())
-            Serial.write(Serial2.read());
+        {
+            uint8_t byte = Serial2.read();
+            Serial.write(byte);
+        }
     }
     #endif
     LOG("Starting GPSmodule");
-    gps = GPSmodule(&Serial2);
+    gps.init();
     LOG("Initializing lcd");
     lcd.init();
     lcd.backlight();

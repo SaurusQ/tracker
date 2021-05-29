@@ -7,6 +7,18 @@ GPSreader::GPSreader(HardwareSerial* serial)
 
 }
 
+void GPSreader::init()
+{
+    const uint8_t* data = configData;
+    for(int i = 0; i < CFG_MSG_NUM; i++)
+    {
+        serial_->write(data, CFG_MSG_LEN);
+        data += CFG_MSG_LEN;
+        delay(10);
+        while(serial_->available()) serial_->read();
+    }
+}
+
 UBXmsg* GPSreader::process()
 {
     if(this->readMsg())
@@ -45,6 +57,12 @@ bool GPSreader::readMsg()
         len_ = *(uint16_t*)(buff_ + 2);
         headerRead = true;
         Serial.print("Lenght: "); Serial.println(len_);
+        if(len_ > 100) // just the sync problems are resolved faster 
+        {
+            headerRead = false;
+            onSync = false;
+            return false;
+        }
     }
     if(serial_->available() >= len_)
     {
@@ -62,7 +80,6 @@ bool GPSreader::readMsg()
 
 bool GPSreader::sync()
 {
-    uint8_t data;
     while(serial_->available() >= 2)
     {
         if(serial_->read() != 0xB5) continue;

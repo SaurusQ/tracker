@@ -22,6 +22,7 @@ class GPSmodule
 {
     public:
         GPSmodule(HardwareSerial* serial);
+        void init();
         void process();                     // call prediodically to process the messages
         Deg getDeg() const {return deg_;};
         Ecef getEcef() const {return ecef_;};

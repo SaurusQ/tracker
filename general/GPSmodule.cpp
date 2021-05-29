@@ -7,6 +7,11 @@ GPSmodule::GPSmodule(HardwareSerial* serial)
 
 }
 
+void GPSmodule::init()
+{
+    reader_.init();
+}
+
 void GPSmodule::process()
 {
     UBXmsg* msg = reader_.process();

@@ -3,11 +3,13 @@
 #include "definitions.hpp"
 #include "UBXmsg.hpp"
 #include "Arduino.h"
+#include "GPSstartupData.hpp"
 
 class GPSreader
 {
     public:
         GPSreader(HardwareSerial* serial);            // start reading messages
+        void init();    // configure the messages in the gps
         UBXmsg* process();      // processes one message or part of it depeding on the uart buffer
         bool readMsg();         // reads part of the message, does not block
         bool sync();            // sync the stream, called from readMsg
