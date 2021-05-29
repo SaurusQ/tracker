@@ -41,14 +41,14 @@ bool GPSreader::readMsg()
     Serial.println("readMsg");
     if(!onSync)
     {
-        Serial.println("Trying to sync");
+        LOG("Trying to sync");
         if(!this->sync()) return false;
         onSync = true;
     }
     if(!headerRead)
     {
         // Read the header
-        Serial.println("Trying to read the hearder");
+        LOG("Trying to read the header");
         if(serial_->available() < 4) return false;
         serial_->readBytes(buff_, 4);
         // class
@@ -56,8 +56,8 @@ bool GPSreader::readMsg()
         id_ = buff_[1];
         len_ = *(uint16_t*)(buff_ + 2);
         headerRead = true;
-        Serial.print("Lenght: "); Serial.println(len_);
-        if(len_ > 100) // just the sync problems are resolved faster 
+        LOG("Lenght: " + String(len_));
+        if(len_ > 100) // just for that the sync problems are resolved faster 
         {
             headerRead = false;
             onSync = false;
@@ -66,7 +66,7 @@ bool GPSreader::readMsg()
     }
     if(serial_->available() >= len_)
     {
-        Serial.println("Trying to read the msg");
+        LOG("Trying to read the msg");
         // read rest of the message + check sum of 2
         serial_->readBytes(buff_ + HEADER_SIZE, len_ + 2);
         ck_a_ = (buff_ + HEADER_SIZE + len_)[0];

@@ -54,8 +54,8 @@ void loop()
     lcd.clear();
     lcd.home();
     lcd.print("lat:");
-    lcd.print(gps.getDeg().lat);
+    lcd.print(gps.getDegLatFloat());
     lcd.setCursor(0, 1);
     lcd.print("lon:");
-    lcd.print(gps.getDeg().lon);
+    lcd.print(gps.getDegLonFloat());
 }

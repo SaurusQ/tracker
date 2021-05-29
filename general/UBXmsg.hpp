@@ -34,7 +34,10 @@ class NAV_POSLLH : public UBXmsg
         static constexpr uint32_t hash = HASH(0x01, 0x02, 28);
         virtual UBX_TYPE getType() { return UBX_TYPE::E_NAV_POSLLH; };
         virtual String toString() {
-            return "NAV_POSLLH\nLon: " + String(lon) + "\n" + "Lat: " + String(lat);
+            return String("NAV_POSLLH")
+                + "\nLon: " + String(lon) 
+                + "\nLat: " + String(lat) 
+                + "\nAcc: " + String(hAcc) + ", " + String(vAcc);
         }
         // Type     Name    Unit    Description (scaling)
         uint32_t    iTOW;   // ms   GPS time of week of the navigation epoch
@@ -53,7 +56,11 @@ class NAV_POSECEF : public UBXmsg
         static constexpr uint32_t hash = HASH(0x01, 0x01, 20);
         virtual UBX_TYPE getType() { return UBX_TYPE::E_NAV_POSECEF; }
         virtual String toString() {
-            return "NAV_POSECEF\nAccuracy: " + String(pAcc);
+            return String("NAV_POSECEF") 
+                + "\nX: " + String(ecefX)
+                + "\nY: " + String(ecefY)
+                + "\nZ: " + String(ecefZ)
+                + "\npAcc: " + String(pAcc);
         }
 
         // Type     Name    Unit    Description (scaling)
@@ -121,7 +128,12 @@ class NAV_SOL : public UBXmsg
         static constexpr uint32_t hash = HASH(0x01, 0x06, 52);
         virtual UBX_TYPE getType() { return UBX_TYPE::E_NAV_SOL; }
         virtual String toString() {
-            return "NAV_SOL\nSatellites: " + String(numSV) + "\n" + "gpsFix: " + String(gpsFix);
+            return String("NAV_SOL")
+                + "\nX: " + String(ecefX)
+                + "\nY: " + String(ecefY)
+                + "\nZ: " + String(ecefZ)
+                + "\nSatellites: " + String(numSV)
+                + "\ngpsFix: " + String(gpsFix);
         }
 
         // Type     Name        Unit        Description (scaling)

@@ -24,9 +24,12 @@ class GPSmodule
         GPSmodule(HardwareSerial* serial);
         void init();
         void process();                     // call prediodically to process the messages
-        Deg getDeg() const {return deg_;};
-        Ecef getEcef() const {return ecef_;};
-        uint8_t getFix() const {return fix_;};
+        Deg getDeg() const {return deg_;}
+        Ecef getEcef() const {return ecef_;}
+        uint8_t getFix() const {return fix_;}
+        float getDegLatFloat() const {return deg_.lat / 10000000.0;}
+        float getDegLonFloat() const {return deg_.lon / 10000000.0;}
+
         void print();
     private:
         GPSreader reader_;
