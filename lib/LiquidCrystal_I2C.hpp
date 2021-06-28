@@ -5,6 +5,7 @@
 #include <inttypes.h>
 #include "Print.h" 
 #include <Wire.h>
+#include "customChar.hpp"
 
 // commands
 #define LCD_CLEARDISPLAY 0x01
@@ -81,7 +82,7 @@ public:
   void backlight();
   void autoscroll();
   void noAutoscroll(); 
-  void createChar(uint8_t, uint8_t[]);
+  void createChar(uint8_t, const uint8_t[]);
   void createChar(uint8_t location, const char *charmap);
   // Example: 	const char bell[8] PROGMEM = {B00100,B01110,B01110,B01110,B11111,B00000,B00100,B00000};
   

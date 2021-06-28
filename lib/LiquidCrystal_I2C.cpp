@@ -72,7 +72,11 @@ void LiquidCrystal_I2C::init_priv()
 {
 	Wire.begin(_sda, _scl, 40000);
 	_displayfunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
-	begin(_cols, _rows);  
+	begin(_cols, _rows);
+	for(int i = 0; i < sizeof(customChars) / sizeof(customChars[0]); i++)
+	{
+		createChar(i, customChars[i]);
+	}
 }
 
 void LiquidCrystal_I2C::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
@@ -219,7 +223,7 @@ void LiquidCrystal_I2C::noAutoscroll(void) {
 
 // Allows us to fill the first 8 CGRAM locations
 // with custom characters
-void LiquidCrystal_I2C::createChar(uint8_t location, uint8_t charmap[]) {
+void LiquidCrystal_I2C::createChar(uint8_t location, const uint8_t charmap[]) {
 	location &= 0x7; // we only have 8 locations 0-7
 	command(LCD_SETCGRAMADDR | (location << 3));
 	for (int i=0; i<8; i++) {

@@ -13,6 +13,8 @@ GPSmodule gps = GPSmodule(&Serial2);
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(LCD_ADDR, 16, 2, LCD_SDA, LCD_SCL);
 Bluetooth blue = Bluetooth();
 
+bool hasTarget = false;
+
 void buttonInterrupt();
 uint32_t buttonPresses = 0;
 unsigned long lastPress = 0;
@@ -22,7 +24,7 @@ void setup()
     Serial.begin(9600);
     Serial2.begin(9600);
     LOG("Starting");
-    attachInterrupt(BUTTON_PIN, buttonInterrupt, RISING);
+    attachInterrupt(BUTTON_PIN, buttonInterrupt, FALLING);
     LOG("Init GPSmodule");
     gps.init();
     LOG("Init bluetooth");
@@ -37,38 +39,63 @@ void setup()
 void buttonInterrupt()
 {
     unsigned long curPress = millis();
-    if(lastPress - curPress > 200)
+    if(lastPress - curPress > 400)
         buttonPresses++;
     lastPress = curPress;
 }
 
 void showMyCoord()
 {
-    lcd.print("lat:");
-    lcd.print(gps.getDegLatFloat());
-    lcd.print("LOC");
-    lcd.setCursor(0, 1);
-    lcd.print("lon:");
-    lcd.print(gps.getDegLonFloat());
+    if(0 == gps.getFix())
+    {
+        lcd.print("No GPS fix");
+    }
+    else
+    {
+        lcd.print("lat:");
+        lcd.print(gps.getDegLatFloat(), 5);
+        lcd.print("LOC");
+        lcd.setCursor(0, 1);
+        lcd.print("lon:");
+        lcd.print(gps.getDegLonFloat(), 5);
+    }
 }
 
 void showTargetCoord()
 {
-    lcd.print("lat:");
-    lcd.print(blue.getLat());
-    lcd.print("TAR");
-    lcd.setCursor(0, 1);
-    lcd.print("lon:");
-    lcd.print(blue.getLon());
+    if(!hasTarget)
+    {
+        lcd.print("No target");
+    }
+    else
+    {
+        lcd.print("lat:");
+        lcd.print(blue.getLat(), 5);
+        lcd.print("TARGET");
+        lcd.setCursor(0, 1);
+        lcd.print("lon:");
+        lcd.print(blue.getLon(), 5);
+    }
 }
 
 void showTrackingData()
 {
-    lcd.print("Distance: ");
-    float dis = GPShelper::distaceBetweenCoordinates(51.5, 0, 38.8, -77.1);
-    lcd.print(dis);
-    lcd.setCursor(0, 1);
-    lcd.print("Nice direction");
+    if(false)//!hasTarget || !gps.getFix())
+    {
+        lcd.print("No target or");
+        lcd.setCursor(0, 1);
+        lcd.print("gps fix");
+    }
+    else
+    {
+        lcd.print("Distance: ");
+        float dis = GPShelper::distaceBetweenCoordinates(51.5, 0, 38.8, -77.1);
+        lcd.print(dis, 2);
+        lcd.setCursor(0, 1);
+        Dir dir = GPShelper::bearing(51.5, 0, 38.8, -77.1);
+        lcd.print("Angle: ");
+        lcd.write((int)dir);
+    }
 }
 
 void loop()
