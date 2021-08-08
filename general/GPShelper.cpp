@@ -3,7 +3,7 @@
 Dir GPShelper::angleToDir(float angle)
 {
     constexpr float div = (360.0f / 8.0f);
-    return static_cast<Dir>((angle + (div / 2.0f)) / (div));
+    return static_cast<Dir>(static_cast<int>((angle + (div / 2.0f)) / (div)) % 8);
 }
 
 float GPShelper::degreesToRadians(float deg)

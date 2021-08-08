@@ -23,12 +23,16 @@ void Bluetooth::process()
 
     if(messageChange_)
     {
+        LOG("Bluetooth got message");
+        hasTarget_ = true;
         char bfr[9];
         String msg = message_;
 
         msg.substring(0, 9).toCharArray(bfr, 9);
+        LOG(bfr);
         lat_ = atof(bfr);
         msg.substring(11, 20).toCharArray(bfr, 9);
+        LOG(bfr);
         lon_ = atof(bfr);
 
         LOG(message_);

@@ -17,8 +17,10 @@ class Bluetooth
         void process();
         float getLat() { return lat_; }
         float getLon() { return lon_; }
+        bool hasTarget() { return hasTarget_; }
     private:
         BluetoothSerial btSerial_;
+        bool hasTarget_ = false;
         float lat_ = 0.0;
         float lon_ = 0.0;
         char messageChange_ = false;

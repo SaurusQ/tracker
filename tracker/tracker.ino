@@ -13,8 +13,6 @@ GPSmodule gps = GPSmodule(&Serial2);
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(LCD_ADDR, 16, 2, LCD_SDA, LCD_SCL);
 Bluetooth blue = Bluetooth();
 
-bool hasTarget = false;
-
 void buttonInterrupt();
 uint32_t buttonPresses = 0;
 unsigned long lastPress = 0;
@@ -63,7 +61,7 @@ void showMyCoord()
 
 void showTargetCoord()
 {
-    if(!hasTarget)
+    if(!blue.hasTarget())
     {
         lcd.print("No target");
     }
@@ -80,7 +78,7 @@ void showTargetCoord()
 
 void showTrackingData()
 {
-    if(false)//!hasTarget || !gps.getFix())
+    if(!blue.hasTarget() || !gps.getFix())
     {
         lcd.print("No target or");
         lcd.setCursor(0, 1);
@@ -89,10 +87,10 @@ void showTrackingData()
     else
     {
         lcd.print("Distance: ");
-        float dis = GPShelper::distaceBetweenCoordinates(51.5, 0, 38.8, -77.1);
+        float dis = GPShelper::distaceBetweenCoordinates(gps.getDegLatFloat(), gps.getDegLonFloat(), blue.getLat(), blue.getLon());
         lcd.print(dis, 2);
         lcd.setCursor(0, 1);
-        Dir dir = GPShelper::bearing(51.5, 0, 38.8, -77.1);
+        Dir dir = GPShelper::bearing(gps.getDegLatFloat(), gps.getDegLonFloat(), blue.getLat(), blue.getLon());
         lcd.print("Angle: ");
         lcd.write((int)dir);
     }
